@@ -12,6 +12,13 @@ var theirHostInout;
 var startButton;
 
 
+var x = 180;
+var y = 180;
+var xspeed = 9;
+var yspeed = 10;
+
+
+
 
 function setup() {
 	ourPortInput = createInput();
@@ -43,23 +50,44 @@ function setup() {
 		console.log(theirHostInout.value());
 	});
 
-	createCanvas(800, 800);
+	createCanvas(500, 500);
 }
 
 function draw() {
-	background(255);
+	background(0);
 	noStroke();
 
 	fill(0, 255, 0);
-	ellipse(mouseX, mouseY, 50, 50);
+	// ellipse(mouseX, mouseY, 50, 50);
+	rect(20, mouseY, 10, 100);
+
 
 	fill(255, 0, 0);
-	ellipse(otherMouseX, otherMouseY, 50, 50);
+	// ellipse(otherMouseX, otherMouseY, 50, 50);
+		rect(20, otherMouseY, 10, 100);
+
 
 	if (oscClient!= undefined) {
 	oscClient.send('mouseX', mouseX);
 	oscClient.send('mouseY', mouseY);
 	}
+
+	//drawing the ball
+    fill(255, 204, 0);
+    ellipse (x, y, 20, 20);
+    //bouncing horizontally
+    
+     if (x+10 > 500 || x-10 < 0)  {
+      xspeed = -xspeed;
+    }
+    x = x + xspeed;
+    //bouncing veritcally
+    if (y+10 > 500 || y-10 < 0) {
+      yspeed = -yspeed;
+    }
+    y = y + yspeed;
+
+
 }
 
 

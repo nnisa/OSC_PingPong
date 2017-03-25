@@ -5,32 +5,31 @@ var yspeed = 10;
 
 
 function setup() {
-  createCanvas(windowWidth, windowHeight);
-  background (25);
-
+  createCanvas(500, 500);
 }
 
 function draw() {
-
-  //distance from center of the screen
-  var d = dist(windowWidth/2, windowHeight/2, mouseX, mouseY);
-
-    fill (random(200, 250), random(200, 250), random(200, 250));
-    ellipse (x, y, 40, 40);
+    background (0);
+    // stroke(255);
+    // strokeWeight(4);
+    fill(255, 204, 0);
+    ellipse (x, y, 20, 20);
 
     //bouncing horizontally
-   x = x + xspeed;
     
-     if (x+20 > windowWidth || x-20 < 0)  {
+     if (x+10 > 500 || x-10 < 0)  {
       xspeed = -xspeed;
     }
+    x = x + xspeed;
+
 
     //bouncing veritcally
-    y = y + yspeed;
+   
 
-    if (y+20 > windowHeight || y-20 < 0) {
+    if (y+10 > 500 || y-10 < 0) {
       yspeed = -yspeed;
     }
+    y = y + yspeed;
 
 }
 
