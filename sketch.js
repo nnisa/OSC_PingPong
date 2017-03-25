@@ -57,14 +57,15 @@ function draw() {
 	background(0);
 	noStroke();
 
+// drawing the local paddle
 	fill(0, 255, 0);
 	// ellipse(mouseX, mouseY, 50, 50);
 	rect(20, mouseY, 10, 100);
 
-
+// drawing the client paddle
 	fill(255, 0, 0);
 	// ellipse(otherMouseX, otherMouseY, 50, 50);
-		rect(20, otherMouseY, 10, 100);
+		rect(480, otherMouseY, 10, 100);
 
 
 	if (oscClient!= undefined) {
@@ -75,19 +76,18 @@ function draw() {
 	//drawing the ball
     fill(255, 204, 0);
     ellipse (x, y, 20, 20);
+
     //bouncing horizontally
-    
-     if (x+10 > 500 || x-10 < 0)  {
+     if (x+10 > 500 || x-10 < 0 || x+10 > mouseX || x-10 < otherMouseX)  {
       xspeed = -xspeed;
     }
     x = x + xspeed;
+
     //bouncing veritcally
-    if (y+10 > 500 || y-10 < 0) {
+    if (y+10 > 500 || y-10 < 0 || y+10 > mouseY || y-10 < otherMouseY) {
       yspeed = -yspeed;
     }
     y = y + yspeed;
-
-
 }
 
 
