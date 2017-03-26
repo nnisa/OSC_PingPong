@@ -42,6 +42,11 @@ function setup() {
 				otherMouseX = parseInt(msg[1]);
 			} else if(msg[0] == "mouseY"){
 				otherMouseY = parseInt(msg[1]);
+			} 
+			if (msg[0]== "x"){
+				x = parseInt(msg[1]);
+			} else if(msg[0] == "y"){
+				y = parseInt(msg[1]);
 			}
 		});
 
@@ -87,6 +92,11 @@ function draw() {
       yspeed = -yspeed;
     }
     y = y + yspeed;
+
+    if (oscClient!= undefined) {
+	oscClient.send('x', xspeed);
+	oscClient.send('y', yspeed);
+	}
 }
 
 
