@@ -82,7 +82,6 @@ function draw() {
       xspeed = -xspeed;
     }
     x = x + xspeed;
-
     //bouncing veritcally
     if (y+10 > 500 || y-10 < 0 || y+10 > mouseY || y-10 < otherMouseY) {
       yspeed = -yspeed;
