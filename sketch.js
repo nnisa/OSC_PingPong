@@ -91,7 +91,11 @@ function draw() {
       xspeed = -xspeed;
     } else if ( (y+10 > 500) || (y-10 < 0) ) {
       yspeed = -yspeed;
+    } else if ( ((x > 0) && (x > 460)) && ((y > otherMouseY) && (y < (otherMouseY+100))) ) {
+    	xspeed = -xspeed;
+    	yspeed = -yspeed;
     }
+
 
     x = x + xspeed;
     y = y + yspeed;
