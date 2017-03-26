@@ -18,8 +18,6 @@ var xspeed = 9;
 var yspeed = 10;
 
 
-
-
 function setup() {
 	ourPortInput = createInput();
 	theirPortInput = createInput();
@@ -43,11 +41,11 @@ function setup() {
 			} else if(msg[0] == "mouseY"){
 				otherMouseY = parseInt(msg[1]);
 			} 
-			if (msg[0]== "x"){
-				x = parseInt(msg[1]);
-			} else if(msg[0] == "y"){
-				y = parseInt(msg[1]);
-			}
+			// if (msg[0]== "x"){
+			// 	x = parseInt(msg[1]);
+			// } else if(msg[0] == "y"){
+			// 	y = parseInt(msg[1]);
+			// }
 		});
 
 		console.log(ourPortInput.value());
@@ -72,7 +70,6 @@ function draw() {
 	// ellipse(otherMouseX, otherMouseY, 50, 50);
 		rect(480, otherMouseY, 10, 100);
 
-
 	if (oscClient!= undefined) {
 	oscClient.send('mouseX', mouseX);
 	oscClient.send('mouseY', mouseY);
@@ -82,15 +79,21 @@ function draw() {
     fill(255, 204, 0);
     ellipse (x, y, 20, 20);
 
-    //bouncing horizontally
-     if (x+10 > 500 || x-10 < 0 || x+10 > mouseX || x-10 < otherMouseX)  {
+
+    //|| (x+10 > mouseX) || (x-10 < otherMouseX) || (y+10 > mouseY) || (y-10 < otherMouseY)
+
+    // paddle is 10x100 pixels
+    // starts at mouseX, mouseY
+    if ( ((x > 0) && (x < 40)) && ((y > mouseY) && (y < (mouseY+100))) ) {
+    	xspeed = -xspeed;
+    	yspeed = -yspeed;
+    } else if ( (x+10 > 500) || (x-10 < 0) ){
       xspeed = -xspeed;
-    }
-    x = x + xspeed;
-    //bouncing veritcally
-    if (y+10 > 500 || y-10 < 0 || y+10 > mouseY || y-10 < otherMouseY) {
+    } else if ( (y+10 > 500) || (y-10 < 0) ) {
       yspeed = -yspeed;
     }
+
+    x = x + xspeed;
     y = y + yspeed;
 
     if (oscClient!= undefined) {
