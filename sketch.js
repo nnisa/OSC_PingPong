@@ -40,36 +40,26 @@ function setup() {
 				otherMouseX = parseInt(msg[1]);
 			} else if(msg[0] == "mouseY"){
 				otherMouseY = parseInt(msg[1]);
-			} 
-			// if (msg[0]== "x"){
-			// 	x = parseInt(msg[1]);
-			// } else if(msg[0] == "y"){
-			// 	y = parseInt(msg[1]);
-			// }
+			}  
 		});
-
 		console.log(ourPortInput.value());
 		console.log(theirPortInput.value());
 		console.log(theirHostInout.value());
 	});
-
 	createCanvas(500, 500);
 }
 
 function draw() {
 	background(0);
 	noStroke();
-
 // drawing the local paddle
 	fill(0, 255, 0);
 	// ellipse(mouseX, mouseY, 50, 50);
 	rect(20, mouseY, 10, 100);
-
 // drawing the client paddle
 	fill(255, 0, 0);
 	// ellipse(otherMouseX, otherMouseY, 50, 50);
 		rect(480, otherMouseY, 10, 100);
-
 	if (oscClient!= undefined) {
 	oscClient.send('mouseX', mouseX);
 	oscClient.send('mouseY', mouseY);
@@ -78,9 +68,6 @@ function draw() {
 	//drawing the ball
     fill(255, 204, 0);
     ellipse (x, y, 20, 20);
-
-
-    //|| (x+10 > mouseX) || (x-10 < otherMouseX) || (y+10 > mouseY) || (y-10 < otherMouseY)
 
     // paddle is 10x100 pixels
     // starts at mouseX, mouseY
@@ -95,10 +82,11 @@ function draw() {
     	xspeed = -xspeed;
     	yspeed = -yspeed;
     }
-
-
     x = x + xspeed;
     y = y + yspeed;
+
+    //if ball touches sides - end this game 
+    //click to start the ball. 
 
     if (oscClient!= undefined) {
 	oscClient.send('x', xspeed);
