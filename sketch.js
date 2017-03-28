@@ -40,6 +40,11 @@ function setup() {
 				otherMouseX = parseInt(msg[1]);
 			} else if(msg[0] == "mouseY"){
 				otherMouseY = parseInt(msg[1]);
+			} 
+			if (msg[0]== "ballX"){
+				x = parseInt(msg[1]);
+			} else if(msg[0] == "ballY"){
+				y = parseInt(msg[1]);
 			}  
 		});
 		console.log(ourPortInput.value());
@@ -59,10 +64,16 @@ function draw() {
 // drawing the client paddle
 	fill(255, 0, 0);
 	// ellipse(otherMouseX, otherMouseY, 50, 50);
-		rect(480, otherMouseY, 10, 100);
+	rect(480, otherMouseY, 10, 100);
+
 	if (oscClient!= undefined) {
 	oscClient.send('mouseX', mouseX);
 	oscClient.send('mouseY', mouseY);
+	}
+
+	if (oscClient!= undefined) {
+	oscClient.send('ballX', x);
+	oscClient.send('ballY', y);
 	}
 
 	//drawing the ball
