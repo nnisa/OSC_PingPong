@@ -12,10 +12,12 @@ var theirHostInout;
 var startButton;
 
 
+var position, player, float, float;
+
 var x = 180;
 var y = 180;
-var xspeed = 9;
-var yspeed = 10;
+var xspeed = 7;
+var yspeed = 8;
 
 
 function setup() {
@@ -31,21 +33,19 @@ function setup() {
 		oscClient = new osc.Client(theirHostInout.value(), theirPortNumber);
 
 		var ourPortNumber = parseInt(ourPortInput.value());
-		oscServer = new osc.Server(ourPortNumber, 'localhost');
+		oscServer = new osc.Server(ourPortNumber, '149.31.145.148');
 
 		oscServer.on('message', function(msg, rinfo){
 			console.log("got some data");
 			console.log(msg);
-			if (msg[0]== "mouseX"){
-				otherMouseX = parseInt(msg[1]);
-			} else if(msg[0] == "mouseY"){
+			if(msg[0] == "/player/position"){
 				otherMouseY = parseInt(msg[1]);
 			} 
-			if (msg[0]== "ballX"){
-				x = parseInt(msg[1]);
-			} else if(msg[0] == "ballY"){
-				y = parseInt(msg[1]);
-			}  
+		// 	if (msg[0]== "float"){
+		// 		x = parseInt(msg[1]);
+		// 	} else if(msg[0] == "float"){
+		// 		y = parseInt(msg[1]);
+		// 	}  
 		});
 		console.log(ourPortInput.value());
 		console.log(theirPortInput.value());
@@ -67,13 +67,7 @@ function draw() {
 	rect(480, otherMouseY, 10, 100);
 
 	if (oscClient!= undefined) {
-	oscClient.send('mouseX', mouseX);
-	oscClient.send('mouseY', mouseY);
-	}
-
-	if (oscClient!= undefined) {
-	oscClient.send('ballX', x);
-	oscClient.send('ballY', y);
+	oscClient.send("/payer/position", mouseY);
 	}
 
 	//drawing the ball
@@ -100,9 +94,13 @@ function draw() {
     //click to start the ball. 
 
     if (oscClient!= undefined) {
-	oscClient.send('x', xspeed);
-	oscClient.send('y', yspeed);
+	oscClient.send("/ball/position", x, y);
 	}
+
+ //    if (oscClient!= undefined) {
+	// oscClient.send('x', xspeed);
+	// oscClient.send('y', yspeed);
+	// }
 }
 
 
