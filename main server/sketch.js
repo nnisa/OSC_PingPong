@@ -12,8 +12,6 @@ var theirHostInout;
 var startButton;
 
 
-var position, player, float, float;
-
 var x = 180;
 var y = 180;
 var xspeed = 7;
@@ -33,20 +31,20 @@ function setup() {
 		oscClient = new osc.Client(theirHostInout.value(), theirPortNumber);
 
 		var ourPortNumber = parseInt(ourPortInput.value());
-		oscServer = new osc.Server(ourPortNumber, '149.31.145.148');
+		oscServer = new osc.Server(ourPortNumber, '149.31.124.32');
 
 		oscServer.on('message', function(msg, rinfo){
 			console.log("got some data");
 			console.log(msg);
-			if(msg[0] == "/player/position"){
-				otherMouseX = parseInt(msg[1]);
+
+			if (msg[1]== "/player/position"){
 				otherMouseY = parseInt(msg[2]);
 			} 
-			if (msg[0]== "float"){
-				x = parseInt(msg[1]);
-			} else if(msg[0] == "float"){
-				y = parseInt(msg[1]);
-			}  
+
+			if (msg[1]== "/ball/position"){
+				x = parseInt(msg[2]);
+				y = parseInt(msg[3]);
+			} 
 		});
 		console.log(ourPortInput.value());
 		console.log(theirPortInput.value());
@@ -67,13 +65,21 @@ function draw() {
 	// ellipse(otherMouseX, otherMouseY, 50, 50);
 	rect(480, otherMouseY, 10, 100);
 
-	if (oscClient!= undefined) {
-	oscClient.send("/payer/position", mouseY);
-	}
+	// if (oscClient!= undefined) {
+	// oscClient.send('mouseX', mouseX);
+	// oscClient.send('mouseY', mouseY);
+	// }
 
 	//drawing the ball
     fill(255, 204, 0);
-    ellipse (x, y, 20, 20);
+    ellipse ((500-x), (500-y), 20, 20);
+
+
+    if (oscClient!= undefined) {
+	oscClient.send('/player/position', mouseY);
+	}
+
+
 
     // paddle is 10x100 pixels
     // starts at mouseX, mouseY
@@ -94,14 +100,15 @@ function draw() {
     //if ball touches sides - end this game 
     //click to start the ball. 
 
-    if (oscClient!= undefined) {
-	oscClient.send("/ball/position", x, y);
-	}
+ //    if (oscClient!= undefined) {
+	// oscClient.send('ballX', x);
+	// oscClient.send('ballY', y);
+	// }
 
-    if (oscClient!= undefined) {
-	oscClient.send('x', xspeed);
-	oscClient.send('y', yspeed);
-	}
+ //    if (oscClient!= undefined) {
+	// oscClient.send('x', xspeed);
+	// oscClient.send('y', yspeed);
+	// }
 }
 
 
